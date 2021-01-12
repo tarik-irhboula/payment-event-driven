@@ -1,6 +1,5 @@
 package com.sfeir.kata.accounts;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 @SpringBootApplication
 public class AccountsApplication implements CommandLineRunner {
@@ -25,18 +23,19 @@ public class AccountsApplication implements CommandLineRunner {
     }
 
     @Autowired
-    private KafkaTemplate<String,Account> template;
+    private KafkaTemplate<String, Account> template;
 
     private final CountDownLatch latch = new CountDownLatch(3);
+
     @Override
     public void run(String... args) throws Exception {
-        this.template.send("Accounts",new Account(0L,300.0));
+        this.template.send("Accounts", new Account(0L, 300.0));
         latch.await(60, TimeUnit.SECONDS);
         logger.info("All received");
     }
 
-    @KafkaListener(topics = "Accounts", groupId = "account")
-    public void listen(Account cr){
+    @KafkaListener(topics = "Accounts")
+    public void listen(Account cr) {
         logger.info(cr.toString());
         latch.countDown();
     }

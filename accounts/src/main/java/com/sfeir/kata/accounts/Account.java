@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Account implements Serializable {
+public class Account {
     private Long id;
     private Double balance;
 }
