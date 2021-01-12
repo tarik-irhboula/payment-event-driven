@@ -47,6 +47,12 @@ US6:
 US7: 
     En tant que client, je dois avoir la main pour alimenter mon compte avec un code.
 
+US8: 
+    En tant qu'utilisateur annonyme, je peux creer un compte client
+
+US9:
+    En tant qu'utilisateur annonyme, je peux creer un compte provider
+
     
     
 Methodes :  
