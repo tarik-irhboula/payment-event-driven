@@ -55,10 +55,11 @@ Methodes :
         fun requestPayment(amount, clientId, providerId, title) : requestPaymentCreated
         fun acceptPayment(requestId):paymentRequestAccepted
         fun refusePayment(requestId):paymentRefused
-
     AccountsService:
         fun supplyAccount(code):accountSupplied
         fun getSoldeAccount(accountId):value
+        fun createdAccount(email,Type):accountCreated
+        
     MoneyTokensService:
         fun genereteToken(amount):token
         
@@ -67,8 +68,8 @@ Event Handlers :
 
     NotificationService:
         onPaymentRequestCreated(event):clientNotified
-        onPaymentAccepted(event):providerNotified
-        onPaymentRefused(event):providerNotified
+        onPaymentAccepted(event):providerNotified/ClientNotified
+        onPaymentRefused(event):providerNotified/clientNotified
     AccountsService:
         onPaymentRequestAccepted(event): transactionProcessed/transactionRefused
     PaymentService:
@@ -79,12 +80,34 @@ Event Handlers :
 
 Events : 
     
-    
-
-
 Services : 
 PaymentsService
 NotificationsService
 AccountsService
 MoneyTokensService
 
+
+
+Requirments : 
+
+- Discovery Service Netflix Eureka
+- Api Gateway : Netflix Zuul 
+- Message Broker : Kafka
+- Cloud config server : Pour configuration centralisée + RabbitMQ
+- PaymentsService
+- NotificationsService
+- AccountsService
+- MoneyTokensService
+
+
+Itiration n°1: 
+- Discovery Service Netflix Eureka
+- Api Gateway : Netflix Zuul 
+- Message Broker : Kafka
+- AccountsService
+- MoneyTokensService
+
+Itiration n°2: 
+- Cloud config server : Pour configuration centralisée + RabbitMQ
+- PaymentsService
+- NotificationsService
