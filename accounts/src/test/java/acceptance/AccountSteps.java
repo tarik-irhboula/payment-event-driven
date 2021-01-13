@@ -2,7 +2,7 @@ package acceptance;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.sfeir.kata.accounts.domain.entity.Account;
+import com.sfeir.kata.accounts.domain.Account;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -19,7 +19,7 @@ public class AccountSteps {
 
     @When("I create an account of type {string}")
     public void iCreateAnAccountOfType(String type) throws Exception {
-        var resolvedType = Account.AccountType.resolve(type);
+        var resolvedType = Account.Type.valueOf(type);
         this.account = Account.create(resolvedType, this.email);
     }
 

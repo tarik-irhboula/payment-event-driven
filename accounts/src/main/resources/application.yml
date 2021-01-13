@@ -1,8 +1,23 @@
 server:
   port: 8080
+
 spring:
   application:
-    name: accounts-ws
+    name: accounts-service
+
+  h2:
+    console:
+      enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  datasource:
+    url: jdbc:h2:file:/tmp/demo
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
 
   kafka:
     consumer:
@@ -10,7 +25,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: my-account
       properties:
-        spring.json.trusted.packages: "com.sfeir.kata.accounts"
+        spring.json.trusted.packages: "*"
 
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer

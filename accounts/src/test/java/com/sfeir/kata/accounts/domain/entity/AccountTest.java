@@ -1,6 +1,7 @@
 package com.sfeir.kata.accounts.domain.entity;
 
-import com.sfeir.kata.accounts.domain.exception.InvalidAccountInput;
+import com.sfeir.kata.accounts.domain.Account;
+import com.sfeir.kata.accounts.domain.InvalidAccountInput;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,7 +12,7 @@ public class AccountTest {
     void shouldError_WhenCreatingNewAccountWithoutEmail() {
         // Given
         String email = null;
-        Account.AccountType type = Account.AccountType.CLIENT;
+        Account.Type type = Account.Type.CLIENT;
         // When
         assertThrows(InvalidAccountInput.class, () -> {
             Account account = Account.create(type, email);
@@ -22,7 +23,7 @@ public class AccountTest {
     void shouldError_WhenCreatingNewAccountWithoutType() {
         // Given
         String email = "account@test.com";
-        Account.AccountType type = null;
+        Account.Type type = null;
         // When
         assertThrows(InvalidAccountInput.class, () -> {
             Account account = Account.create(type, email);
@@ -33,7 +34,7 @@ public class AccountTest {
     void returnEmptyAccountWithValidIdentifier_WhenCreatingNewAccount() {
         // Given
         String email = "account@test.com";
-        Account.AccountType type = Account.AccountType.CLIENT;
+        Account.Type type = Account.Type.CLIENT;
         // When
         Account account = Account.create(type, email);
         // Then

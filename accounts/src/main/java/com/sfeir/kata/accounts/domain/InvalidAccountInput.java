@@ -1,4 +1,4 @@
-package com.sfeir.kata.accounts.domain.exception;
+package com.sfeir.kata.accounts.domain;
 
 public class InvalidAccountInput extends RuntimeException {
 
