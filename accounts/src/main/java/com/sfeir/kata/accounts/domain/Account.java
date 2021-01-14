@@ -27,7 +27,8 @@ public class Account extends AbstractAggregateRoot<Account> {
 
     private BigDecimal balance;
 
-    Account() {
+    //TODO Remove public
+    public Account() {
     }
 
     Account(UUID id, Type type, String email, BigDecimal balance) {

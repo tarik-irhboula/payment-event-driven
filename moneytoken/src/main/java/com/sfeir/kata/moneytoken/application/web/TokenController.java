@@ -31,7 +31,8 @@ public class TokenController {
     @PutMapping("/consume")
     public Object consumeToken(@RequestBody TokenConsumptionPayload payload) {
         try {
-            this.tokenService.consumeToken(payload.getConsumerId(), payload.getTokenString());
+            this.tokenService.prepareTokenConsumption(payload.getConsumerId(), payload.getTokenString());
+            this.tokenService.validateTokenConsumption(payload.getConsumerId(), payload.getTokenString());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (InvalidTokenInput e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

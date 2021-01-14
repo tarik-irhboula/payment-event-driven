@@ -26,7 +26,16 @@ public class TokenService {
         return token.getValue();
     }
 
-    public void consumeToken(UUID consumerId, String tokenString) {
+    public void prepareTokenConsumption(UUID consumerId, String tokenString) {
+        Token token = this.repo.findById(tokenString)
+                .orElseThrow(() -> new InvalidTokenInput("Invalid token string. Token not found"));
+
+        token.prepareConsumption(consumerId);
+
+        this.repo.save(token);
+    }
+
+    public void validateTokenConsumption(UUID consumerId, String tokenString) {
         Token token = this.repo.findById(tokenString)
                 .orElseThrow(() -> new InvalidTokenInput("Invalid token string. Token not found"));
 

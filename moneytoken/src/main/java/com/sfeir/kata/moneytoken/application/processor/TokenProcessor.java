@@ -3,6 +3,7 @@ package com.sfeir.kata.moneytoken.application.processor;
 import com.sfeir.kata.moneytoken.application.message.AccountTransactionChannel;
 import com.sfeir.kata.moneytoken.domain.Token;
 import com.sfeir.kata.moneytoken.domain.TokenConsumed;
+import com.sfeir.kata.moneytoken.domain.TokenReadyForConsumption;
 import com.sfeir.kata.moneytoken.domain.TokenRepository;
 import com.sfeir.kata.sharedmodels.application.SupplyAccountMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class TokenProcessor {
 
     @Async
     @TransactionalEventListener
-    public void handleTokenConsumption(TokenConsumed event) {
+    public void handleTokenReadyForConsumption(TokenReadyForConsumption event) {
         this.repo.findById(event.getTokenId())
                 .map(token -> createMessage(event.getConsumerId(), token))
                 .ifPresent(msg -> channel.sendMessage(msg));
