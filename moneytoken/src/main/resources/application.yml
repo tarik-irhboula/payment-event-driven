@@ -1,9 +1,9 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
   application:
-    name: accounts-service
+    name: moneytoken-service
 
   h2:
     console:
@@ -14,7 +14,7 @@ spring:
       ddl-auto: create
 
   datasource:
-    url: jdbc:h2:file:/tmp/account
+    url: jdbc:h2:file:/tmp/moneytoken
     driverClassName: org.h2.Driver
     username: sa
     password:

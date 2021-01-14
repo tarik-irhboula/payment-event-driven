@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
@@ -24,12 +25,12 @@ public class Account extends AbstractAggregateRoot<Account> {
 
     private String email;
 
-    private Double balance;
+    private BigDecimal balance;
 
     Account() {
     }
 
-    Account(UUID id, Type type, String email, Double balance) {
+    Account(UUID id, Type type, String email, BigDecimal balance) {
         super();
 
         this.id = id;
@@ -40,10 +41,10 @@ public class Account extends AbstractAggregateRoot<Account> {
         this.registerEvent(new AccountCreated(this.id));
     }
 
-    public static Account create(Type type, String email) {
+    static Account create(Type type, String email) {
         if (type == null) throw new InvalidAccountInput("Invalid account type");
         if (email == null) throw new InvalidAccountInput("Invalid email");
 
-        return new Account(UUID.randomUUID(), type, email, 0.0);
+        return new Account(UUID.randomUUID(), type, email, new BigDecimal(0));
     }
 }

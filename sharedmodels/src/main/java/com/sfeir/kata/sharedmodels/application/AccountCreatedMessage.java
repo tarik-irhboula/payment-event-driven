@@ -1,4 +1,4 @@
-package com.sfeir.kata.accounts.application.message;
+package com.sfeir.kata.sharedmodels.application;
 
 import lombok.Data;
 

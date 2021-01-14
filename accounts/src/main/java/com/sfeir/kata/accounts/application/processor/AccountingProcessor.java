@@ -1,7 +1,7 @@
 package com.sfeir.kata.accounts.application.processor;
 
 import com.sfeir.kata.accounts.application.message.AccountChannel;
-import com.sfeir.kata.accounts.application.message.AccountCreatedMessage;
+import com.sfeir.kata.sharedmodels.application.AccountCreatedMessage;
 import com.sfeir.kata.accounts.domain.Account;
 import com.sfeir.kata.accounts.domain.AccountCreated;
 import com.sfeir.kata.accounts.domain.AccountRepository;
@@ -31,7 +31,7 @@ public class AccountingProcessor {
 
     }
 
-    static AccountCreatedMessage createdMessage(Account account) {
+    private static AccountCreatedMessage createdMessage(Account account) {
         AccountCreatedMessage msg = new AccountCreatedMessage();
         msg.setAccountId(account.getId());
         msg.setAccountEmail(account.getEmail());

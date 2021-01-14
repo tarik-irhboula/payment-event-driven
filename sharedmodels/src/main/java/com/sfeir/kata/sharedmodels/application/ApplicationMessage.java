@@ -1,4 +1,4 @@
-package com.sfeir.kata.shared.application;
+package com.sfeir.kata.sharedmodels.application;
 
 public interface ApplicationMessage {
     String fullyQualifiedName();
