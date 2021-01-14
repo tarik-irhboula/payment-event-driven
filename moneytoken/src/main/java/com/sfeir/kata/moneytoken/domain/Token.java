@@ -15,8 +15,9 @@ import java.util.UUID;
 @Getter
 @Entity
 public class Token extends AbstractAggregateRoot<Token> {
-
-    enum State {CREATED, CONSUMPTION_PENDING, CONSUMED}
+    enum State {
+        CREATED, CONSUMPTION_PENDING, CONSUMED
+    }
 
     private final static BigDecimal[] possibleAmounts = {
             new BigDecimal(100),
@@ -26,7 +27,9 @@ public class Token extends AbstractAggregateRoot<Token> {
 
     @Id
     private String value;
+
     private BigDecimal amount;
+
     @Enumerated(EnumType.STRING)
     private State state;
 
@@ -48,12 +51,8 @@ public class Token extends AbstractAggregateRoot<Token> {
     }
 
     Token prepareConsumption(UUID consumerId) {
-        if (consumerId == null) {
-            throw new InvalidTokenInput("Invalid token consumer");
-        }
-        if (!State.CREATED.equals(this.state)) {
-            throw new InvalidTokenState("Token invalid state");
-        }
+        if (consumerId == null) throw new InvalidTokenInput("Invalid token consumer");
+        if (!State.CREATED.equals(this.state)) throw new InvalidTokenState("Token invalid state");
 
         this.state = State.CONSUMPTION_PENDING;
         this.registerEvent(new TokenConsumed(consumerId, this.value));
@@ -62,12 +61,8 @@ public class Token extends AbstractAggregateRoot<Token> {
     }
 
     Token consume(UUID consumerId) {
-        if (consumerId == null) {
-            throw new InvalidTokenInput("Invalid token consumer");
-        }
-        if (!State.CONSUMPTION_PENDING.equals(this.state)) {
-            throw new InvalidTokenState("Token invalid state");
-        }
+        if (consumerId == null) throw new InvalidTokenInput("Invalid token consumer");
+        if (!State.CONSUMPTION_PENDING.equals(this.state)) throw new InvalidTokenState("Token invalid state");
 
         this.state = State.CONSUMED;
         this.registerEvent(new TokenConsumed(consumerId, this.value));

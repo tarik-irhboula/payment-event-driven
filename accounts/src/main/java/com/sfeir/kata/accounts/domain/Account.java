@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Entity
 public class Account extends AbstractAggregateRoot<Account> {
-    public enum Type {
+    enum Type {
         CLIENT, PROVIDER
     }
 
