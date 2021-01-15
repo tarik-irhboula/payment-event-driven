@@ -1,7 +1,7 @@
 package com.sfeir.kata.accounts.application.web;
 
 import com.sfeir.kata.accounts.domain.AccountingService;
-import com.sfeir.kata.accounts.domain.InvalidAccountInput;
+import com.sfeir.kata.accounts.domain.exception.InvalidAccountState;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +23,7 @@ public class AccountController {
     public Object createAccount(@RequestParam String type, @RequestParam String email) {
         try {
             return this.accountingService.createAccount(type, email);
-        } catch (InvalidAccountInput e) {
+        } catch (InvalidAccountState e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }

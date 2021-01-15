@@ -1,5 +1,8 @@
 package com.sfeir.kata.sharedmodels.domain;
 
-public interface DomainEvent {
+import lombok.Getter;
 
+import java.util.UUID;
+
+public interface DomainEvent {
 }

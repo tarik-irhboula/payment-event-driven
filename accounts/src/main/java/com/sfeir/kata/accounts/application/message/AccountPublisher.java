@@ -6,17 +6,20 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AccountChannel {
-    private static final String ACCOUNT_TOPIC = "account";
-
+public class AccountPublisher {
     private KafkaTemplate<String, AccountMessage> template;
 
     @Autowired
-    AccountChannel(KafkaTemplate<String, AccountMessage> template) {
+    AccountPublisher(KafkaTemplate<String, AccountMessage> template) {
         this.template = template;
     }
 
-    public void sendMessage(AccountMessage msg) {
-        template.send(ACCOUNT_TOPIC, msg.fullyQualifiedName(), msg);
+    public void sendCommand(AccountMessage.Commands cmd, AccountMessage msg) {
+        template.send(AccountMessage.COMMAND_TOPIC, cmd.toString(), msg);
     }
+
+    public void sendEvent(AccountMessage.Events event, AccountMessage msg) {
+        template.send(AccountMessage.EVENT_TOPIC, event.toString(), msg);
+    }
+
 }

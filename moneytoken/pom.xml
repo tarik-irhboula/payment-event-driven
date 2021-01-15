@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>11</java.version>
+        <swagger.version>1.5.2</swagger.version>
     </properties>
 
     <dependencies>
@@ -44,7 +45,7 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.5.2</version>
+            <version>${swagger.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

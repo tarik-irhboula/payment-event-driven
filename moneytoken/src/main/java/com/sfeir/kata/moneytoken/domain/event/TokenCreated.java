@@ -1,15 +1,15 @@
-package com.sfeir.kata.moneytoken.domain;
-
+package com.sfeir.kata.moneytoken.domain.event;
 
 import com.sfeir.kata.sharedmodels.domain.DomainEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class TokenReadyForConsumption implements DomainEvent {
-    private UUID consumerId;
-    private String tokenId;
+@ToString
+public class TokenCreated implements DomainEvent {
+    private UUID tokenId;
 }

@@ -1,4 +1,4 @@
-package com.sfeir.kata.accounts.domain;
+package com.sfeir.kata.moneytoken.domain.event;
 
 import com.sfeir.kata.sharedmodels.domain.DomainEvent;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,6 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 @ToString
-public class AccountCreated implements DomainEvent {
-    private UUID accountId;
+public class TokenConsumptionCanceled implements DomainEvent {
+    private UUID tokenId;
 }

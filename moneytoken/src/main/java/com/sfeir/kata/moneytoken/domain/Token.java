@@ -1,5 +1,11 @@
 package com.sfeir.kata.moneytoken.domain;
 
+import com.sfeir.kata.moneytoken.domain.event.TokenConsumed;
+import com.sfeir.kata.moneytoken.domain.event.TokenConsumptionCanceled;
+import com.sfeir.kata.moneytoken.domain.event.TokenCreated;
+import com.sfeir.kata.moneytoken.domain.event.TokenReadyForConsumption;
+import com.sfeir.kata.moneytoken.domain.exception.InvalidTokenInput;
+import com.sfeir.kata.moneytoken.domain.exception.InvalidTokenState;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
@@ -26,6 +32,8 @@ public class Token extends AbstractAggregateRoot<Token> {
     };
 
     @Id
+    private UUID id;
+
     private String value;
 
     private BigDecimal amount;
@@ -38,9 +46,12 @@ public class Token extends AbstractAggregateRoot<Token> {
     }
 
     Token(String value, BigDecimal amount, State state) {
+        this.id = UUID.randomUUID();
         this.value = value;
         this.amount = amount;
         this.state = state;
+
+        this.registerEvent(new TokenCreated(this.id));
     }
 
     static Token generate(BigDecimal amount) {
@@ -55,7 +66,16 @@ public class Token extends AbstractAggregateRoot<Token> {
         if (!State.CREATED.equals(this.state)) throw new InvalidTokenState("Token invalid state");
 
         this.state = State.CONSUMPTION_PENDING;
-        this.registerEvent(new TokenConsumed(consumerId, this.value));
+        this.registerEvent(new TokenReadyForConsumption(consumerId, this.id));
+
+        return this;
+    }
+
+    Token cancelConsumption() {
+        if (!State.CONSUMPTION_PENDING.equals(this.state)) throw new InvalidTokenState("Token invalid state");
+
+        this.state = State.CREATED;
+        this.registerEvent(new TokenConsumptionCanceled(this.id));
 
         return this;
     }
@@ -65,7 +85,7 @@ public class Token extends AbstractAggregateRoot<Token> {
         if (!State.CONSUMPTION_PENDING.equals(this.state)) throw new InvalidTokenState("Token invalid state");
 
         this.state = State.CONSUMED;
-        this.registerEvent(new TokenConsumed(consumerId, this.value));
+        this.registerEvent(new TokenConsumed(consumerId, this.id));
 
         return this;
     }

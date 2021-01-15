@@ -1,5 +1,6 @@
 package com.sfeir.kata.moneytoken.domain;
 
+import com.sfeir.kata.moneytoken.domain.exception.InvalidTokenInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,22 +27,37 @@ public class TokenService {
         return token.getValue();
     }
 
-    public void prepareTokenConsumption(UUID consumerId, String tokenString) {
-        Token token = this.repo.findById(tokenString)
+    public UUID prepareTokenConsumption(UUID consumerId, String tokenString) {
+        Token token = this.repo.findFirstByValue(tokenString)
                 .orElseThrow(() -> new InvalidTokenInput("Invalid token string. Token not found"));
 
         token.prepareConsumption(consumerId);
 
         this.repo.save(token);
+
+        return token.getId();
     }
 
-    public void validateTokenConsumption(UUID consumerId, String tokenString) {
-        Token token = this.repo.findById(tokenString)
+    public UUID validateTokenConsumption(UUID consumerId, UUID tokenId) {
+        Token token = this.repo.findById(tokenId)
                 .orElseThrow(() -> new InvalidTokenInput("Invalid token string. Token not found"));
 
         token.consume(consumerId);
 
         this.repo.save(token);
+
+        return token.getId();
     }
 
+    public UUID cancelTokenConsumption(UUID tokenId) {
+        Token token = this.repo.findById(tokenId)
+                .orElseThrow(() -> new InvalidTokenInput("Invalid token string. Token not found"));
+
+        token.cancelConsumption();
+
+        this.repo.save(token);
+
+        return token.getId();
+
+    }
 }
