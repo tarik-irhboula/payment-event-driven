@@ -1,8 +1,4 @@
-# e-payement
-Kata SFEIR E paiement
-
-
-****
+# e-payment
 
 - Un provider fait une demande de paiement pour un client. 
 - Le client à partir d’une notification, a le choix d’accepter ou refuser la demande. 
